@@ -143,17 +143,16 @@ async function run() {
 
         // GET User
 
+
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
             const user = await usersCollection.findOne(query);
             let isAdmin = false;
-            if (user.role === 'admin') {
+            if (user?.role === 'admin') {
                 isAdmin = true;
             }
-
             res.json({ admin: isAdmin });
-
         })
 
 
@@ -162,7 +161,6 @@ async function run() {
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await usersCollection.insertOne(user);
-            console.log(result);
             res.json(result);
         });
 
